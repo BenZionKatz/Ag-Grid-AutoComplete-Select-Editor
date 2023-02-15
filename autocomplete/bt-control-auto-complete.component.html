@@ -1,0 +1,108 @@
+<div   style="position: relative; overflow:hidden;width: inherit; height:inherit;">
+  <!--
+    <div class = "flex-start no-wrap">
+      <!--
+          <span class = "text-center flex-center ">
+          <mat-icon style = "font-size:17px;color: gray;" 
+            class = "text-center">
+              edit
+          </mat-icon>
+      </span>-->
+      <!--<input 
+      [id] = "idDisabled" 
+       *ngIf = "!enabled" 
+      class = "_input bg-light overflow-elipsis mr-1" 
+         disabled>-->
+       <!--<nz-input-group  [nzSuffix]="suffixIcon">-->
+        <!-- <textarea [id]="id" 
+        (input)="onInput($event)"
+        (keypress)="onKey($event)"
+        (keydown)="onKey($event)"
+          (focus)="onFocus($event)"
+          (click)="onFocus($event)"
+          (blur)="onBlur($event)"
+          style="width: inherit; height:inherit; resize: none;overflow: auto;"
+          [placeholder]="btPlaceHolder"
+          (change)="onc($event)"
+          class="_input bg-light overflow-elipsis scroll-thin"
+          [value]="(valueSelected.label)?(valueSelected.label):('')" 
+          [nzAutocomplete]="auto"></textarea>   -->
+<input [id]="id" 
+        (input)="onInput($event)"
+        (keypress)="onKey($event)"
+        (keydown)="onKey($event)"
+          (focus)="onFocus($event)"
+          (click)="onFocus($event)"
+          (blur)="onBlur($event)"
+          style="width: inherit; height:inherit;"
+          [placeholder]="btPlaceHolder"
+          [type]="btType"
+          class="_input bg-light overflow-elipsis "
+          [value]="(valueSelected.label)?(valueSelected.label):('')" 
+          [nzAutocomplete]="auto" />
+         
+        <!--</nz-input-group>-->
+        <ng-template #suffixIcon>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+        <div>
+          <nz-autocomplete class="scroll-thin" [nzWidth] = "btWidth" [nzBackfill]="true" #auto >
+            <nz-auto-option *ngFor= "let option of filteredOptions" 
+            [nzLabel]="option.label"
+            [nzValue]="option.id"
+            >
+              <div (click)="onSelectAutocomplete(option)"
+                class = "flex-start" >
+                <div *ngIf = "!btCustomTemplate"> {{ option.label}} 
+                </div>
+                <div *ngIf = "btCustomTemplate && btCustomTemplate.templateType === 'ang-tmpl'"> 
+                  <ng-container
+                  [ngTemplateOutlet]="btCustomTemplate.template"
+                  [ngTemplateOutletContext]="{option:option}"
+                      >
+                  </ng-container>
+                </div>
+                <div  *ngIf = "btCustomTemplate && btCustomTemplate.templateType === 'html'"
+                  [innerHtml] = "getCustomTmplHtml(option)">                  
+                </div>
+              </div>
+            </nz-auto-option> 
+          </nz-autocomplete>
+        </div>
+        
+ <!--<form class="example-form">
+    <input type="text"
+           [id] = "id"
+           (input) = "onInput($event)"
+           (keypress) = "onKey($event)"
+           (keydown) = "onKey($event)"
+           (focus) = "onFocus($event)"
+           (click) = "onFocus($event)"
+           (dblclick) = "onFocus($event)"
+           (blur) = "onBlur($event)"
+           [placeholder] = "placeHolder"
+           [type] = "type"
+           class = "_input bg-light overflow-elipsis mr-1"
+           [value] = "value"
+           [matAutocomplete]="auto">
+
+    <mat-autocomplete *ngIf = "0"
+    (optionSelected) = "onSelect($event)"
+    #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </form>-->
+  <div style = "position:absolute;
+                font-size:17px;
+                left:5px;
+                top:3px;" 
+      class = "text-danger" 
+      *ngIf = "showWarningNotInList()">
+       <strong>x</strong>
+  </div>
+</div>
+
+
+
