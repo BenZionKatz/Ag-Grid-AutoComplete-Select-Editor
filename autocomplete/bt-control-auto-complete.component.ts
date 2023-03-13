@@ -61,29 +61,18 @@ export class BtControlAutoCompleteComponent implements OnInit {
   }
 
   onFocus(e:Event){
-    // console.log(this.btValue)
     e.stopPropagation();
     this.btFocus.emit();
     if(this.btList){
-      /**בנצי-24/11/21, נראה לי מיותר */
       // this.filteredOptions = this._filter(this.valueSelected.label)
       this._buildDropdown(this.btList);
     }
-    // console.log(this.btValue,this.btValue?.length , this._minCharsToFetch(),this.btQuery.minCharsToFetch)
     if(this.btQuery && this._hasToFetchQuery('focus',this.btValue)){
-        this._fetchAndBuildDropdown(this.btValue)
-      } //למקרה שרוצים לפתוח בלי
-      // else if(this.btQuery && this.queryResponse){
-      //   this._buildDropdown(this.queryResponse)
-      // }
-      // console.log(this.btValue) 
+      this._fetchAndBuildDropdown(this.btValue)
+    }  
   }
 
   onBlur(event){
-    // console.log(event,this.valueSelected,this._isSelectedValueInList())
-    // let isSelectedValueInList = this._isSelectedValueInList();
-    // event.target.value=''
-    // console.log(this._getNonFilteredLabelsAsArray(),this.valueSelected,(this._isSelectedValueInList()))
     /**if is change value to empty, is alwais avlibale */
     /**for select without mouse */
     const valueInList = this.findOption('label',this.input.value)
@@ -92,28 +81,23 @@ export class BtControlAutoCompleteComponent implements OnInit {
       && this.input.value !== this.valueSelected.id
       && isSelectedValueInList){
       this.onSelectAutocomplete(valueInList);
-      // console.log(this.valueSelected)
     }
 
 
     if( this.btValue
       && this.input.value === '')
       this.btChanges.emit('');
-      // else if((this.btValueNotInListStrategy === 'reject'
-      // ||this.btValueNotInListStrategy === 'add-to-list')
-      // && this.input.value !== this.valueSelected.label)this.input.value =  this.btValue || '';
+      
       /**if selected from list or is added or allow news and is changed*/
     else if((isSelectedValueInList
         || this.valueSelected.addedToList
         || this.btValueNotInListStrategy === 'allow')
-        /**בודק שהשתנה ערך נבחר לעומת הערך הקודם */
         && this.valueSelected.id !== this.btValue)
       this._emitSelectedValue();
     
     else if(this.btValueNotInListStrategy === 'reject'
         ||this.btValueNotInListStrategy === 'add-to-list'){
       this.input.value =  this.valueSelected.label || '';}   
-    // console.log(this.btValue,this.valueSelected)
     this.detectChanges();
   }
 
@@ -121,15 +105,6 @@ export class BtControlAutoCompleteComponent implements OnInit {
 
   onInput(event){
     let val = event.target.value;
-    //בנצי?
-    // this._utilities.setSelectedLabel(val,this);
-    // this._utilities.setSelected({id:val,label:val},this);
-    
-    // if(this.btValueNotInListStrategy === 'add-to-list' ){
-    //     this._utilities.removeAddedToList(this);
-    //     this.nonFilteredOptions.unshift({id:val,label:val,fullObjForTmpl:{},addedToList:true})
-    // }
-    // console.log(this.input?.value)
     /**if allow, we will save the data immediately, so as not to lose it */
     if(this.btValueNotInListStrategy === 'allow'){
       this._utilities.setSelected({id:val,label:val},this);}
@@ -155,7 +130,6 @@ export class BtControlAutoCompleteComponent implements OnInit {
     }
     this.valueSelected = option;
     this.detectChanges();
-    //בנצי? אולי עבור מקרה שנסגר המסך לפני שעזב
     this._utilities.setTimeOutBlur(200,this);
    }
 
@@ -170,14 +144,11 @@ export class BtControlAutoCompleteComponent implements OnInit {
        e.stopPropagation();
        this.detectChanges();
       setTimeout(()=>{
-        // if(this.input.value && this.nonFilteredOptions.findFirst('label',this.input.value))
-        //   this.valueSelected = this.nonFilteredOptions.findFirst('label',this.input.value)
         this.input.blur();
       },0)
     }
   }
   showWarningNotInList(){
-    // return false;
     // /**for is added row in table */
     // setTimeout(() => {
       // console.log(this.valueSelected,this.valueSelected.label === null)
@@ -424,9 +395,6 @@ export class BtControlAutoCompleteComponent implements OnInit {
     createOptionForNotInList(instance){
       let curr = this.input?.value || '';
       return {id:curr,label:curr,fullObjForTmpl:{},addedToList:true}
-      // let option = (instance.valueSelected.label)
-    //  ?([{id:curr,label:curr,fullObjForTmpl:{},addedToList:true}])   /**{id:curr,label:curr,fullObjForTmpl:{}} */
-    //   :([]);return option;
     },
     doAddOptionForNotInList(instance){
       return instance.btValueNotInListStrategy === 'add-to-list'
@@ -480,61 +448,8 @@ export class BtControlAutoCompleteComponent implements OnInit {
  
 }
 
-/*
- //
-    /*if(this.enter){
-      document.getElementById(this.id).focus();
-    }
-    
  /*ngDoCheck(){
   //this._initList();
  }
+ */
 
-
-onDblClick(){
-  this.dblClicked = true;
-  this.filteredOptions = [];
-  setTimeout(()=>{
-    this.dblClicked = false;
-  },1000)}
-  */
- //dblClicked:boolean = false;
- //this.filteredOptions.splice(0,1);
-          //this.filteredOptions.unshift({id:val,label:val,fullObjForTmpl:{},addedToList:true})
-/*if(this.input)
-        this.input.style.width  = this.btWidth.toString() + 'px';*/
- /*private _initList(){
-    /*if(this.btAutocompleteObservable ){
-      let fetch = this.btAutocompleteObservable;
-      if(fetch !== undefined && fetch.subscribe !== undefined){
-        setTimeout(()=>{
-          fetch.subscribe(res => {
-            this.filteredOptions = res;
-          })
-        },2000)
-       }
-    }
-    if(this.btList){
-      if(this.btList[0] 
-        && typeof this.btList[0]  === 'string'){
-          this._initializeOptionsFromStringArr();
-          this.valueSelected.label = this.valueSelected.id;
-        }
-    if(this.btList[0] 
-          && typeof this.btList[0]  === 'object')
-          this._initializeOptionsFromObjectArr();
-    }
-//@Input()btAutocompleteObservable;
-//@Input()enter:boolean = false;
-//
-//this.filteredOptions = _initial;
-    
-    this.filteredOptions = this.nonFilteredOptions.get();//this._filter(this.valueSelected.label);
-    this.detectChanges();
-  }*/
-
-  /*private _blurOnScroll(){
-    console.log('scroll?')
-   /* if(!this.lockScroll)
-       this.input.blur();
-  }*/
