@@ -1,32 +1,5 @@
 <div   style="position: relative; overflow:hidden;width: inherit; height:inherit;">
-  <!--
-    <div class = "flex-start no-wrap">
-      <!--
-          <span class = "text-center flex-center ">
-          <mat-icon style = "font-size:17px;color: gray;" 
-            class = "text-center">
-              edit
-          </mat-icon>
-      </span>-->
-      <!--<input 
-      [id] = "idDisabled" 
-       *ngIf = "!enabled" 
-      class = "_input bg-light overflow-elipsis mr-1" 
-         disabled>-->
-       <!--<nz-input-group  [nzSuffix]="suffixIcon">-->
-        <!-- <textarea [id]="id" 
-        (input)="onInput($event)"
-        (keypress)="onKey($event)"
-        (keydown)="onKey($event)"
-          (focus)="onFocus($event)"
-          (click)="onFocus($event)"
-          (blur)="onBlur($event)"
-          style="width: inherit; height:inherit; resize: none;overflow: auto;"
-          [placeholder]="btPlaceHolder"
-          (change)="onc($event)"
-          class="_input bg-light overflow-elipsis scroll-thin"
-          [value]="(valueSelected.label)?(valueSelected.label):('')" 
-          [nzAutocomplete]="auto"></textarea>   -->
+
 <input [id]="id" 
         (input)="onInput($event)"
         (keypress)="onKey($event)"
@@ -70,30 +43,7 @@
           </nz-autocomplete>
         </div>
         
- <!--<form class="example-form">
-    <input type="text"
-           [id] = "id"
-           (input) = "onInput($event)"
-           (keypress) = "onKey($event)"
-           (keydown) = "onKey($event)"
-           (focus) = "onFocus($event)"
-           (click) = "onFocus($event)"
-           (dblclick) = "onFocus($event)"
-           (blur) = "onBlur($event)"
-           [placeholder] = "placeHolder"
-           [type] = "type"
-           class = "_input bg-light overflow-elipsis mr-1"
-           [value] = "value"
-           [matAutocomplete]="auto">
-
-    <mat-autocomplete *ngIf = "0"
-    (optionSelected) = "onSelect($event)"
-    #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </form>-->
+ 
   <div style = "position:absolute;
                 font-size:17px;
                 left:5px;
